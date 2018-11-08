@@ -1,12 +1,10 @@
 package com.example.user.panasivan_android_task2;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends ListViewLoader {
     JsonHelper helper;
     List<Film> films;
     @Override
