@@ -3,11 +3,11 @@ package com.example.user.panasivan_android_task2;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +42,13 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Genre selectedGenre = (Genre) adapterView.getItemAtPosition(i);
                 Intent intent = new Intent(self, FilmListActivity.class);
+                List<Film> filmsToIntent = new ArrayList<>();
+                for(Film film: films){
+                    if(film.getGenres().contains(selectedGenre)){
+                        filmsToIntent.add(film);
+                    }
+                }
+                intent.putParcelableArrayListExtra("films", (ArrayList<? extends Parcelable>) filmsToIntent);
                 startActivity(intent);
             }
         };

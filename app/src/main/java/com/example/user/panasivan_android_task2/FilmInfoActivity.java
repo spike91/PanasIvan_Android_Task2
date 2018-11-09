@@ -1,9 +1,8 @@
 package com.example.user.panasivan_android_task2;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import java.util.List;
@@ -14,83 +13,90 @@ public class FilmInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_film_info);
-        JsonHelper helper = new JsonHelper(this);
-        film = helper.getFilms().get(0);
-        TextView title = findViewById(R.id.film_title);
-        title.setText(film.getTitle());
-        title = findViewById(R.id.film_year);
-        title.setText(film.getYear());
-        title = findViewById(R.id.film_awards);
-        title.setText(film.getAwards());
-        title = findViewById(R.id.film_runtime);
-        title.setText(film.getRuntime());
-        title = findViewById(R.id.film_plot);
-        title.setText(film.getPlot());
-        title = findViewById(R.id.film_actor);
-        String text = "";
+        Intent intent = getIntent();
+        film = intent.getParcelableExtra("film");
+        TextView field = findViewById(R.id.film_title);
+        field.setText(film.getTitle());
+        field = findViewById(R.id.film_year);
+        field.setText(film.getYear());
+        field = findViewById(R.id.film_awards);
+        field.setText(film.getAwards());
+        field = findViewById(R.id.film_runtime);
+        field.setText(film.getRuntime());
+        field = findViewById(R.id.film_plot);
+        field.setText(film.getPlot());
+
+        field = findViewById(R.id.film_actor);
+        StringBuffer text = new StringBuffer();
         List<Person> persons = film.getActors();
         for(Person item: persons){
-            text += item.getName();
+            text.append(item.getName());
             if(persons.indexOf(item) < persons.size() - 1){
-                text += ", ";
+                text.append(", ");
             }
         }
-        title.setText(text);
+        field.setText(text);
 
-        title = findViewById(R.id.film_writer);
-        text = "";
+        field = findViewById(R.id.film_writer);
+        text = new StringBuffer();
         persons = film.getWriters();
         for(Person item: persons){
-            text += item.getName();
-            // TODO: description
+            text.append(item.getName());
+            for(Role role: item.getRoles()){
+                String description = role.getDescription();
+                String name = role.getName();
+                if(name.equalsIgnoreCase("Writer") && description != null){
+                    text.append(" " + role.getDescription());
+                }
+            }
             if(persons.indexOf(item) < persons.size() - 1){
-                text += ", ";
+                text.append(", ");
             }
         }
-        title.setText(text);
+        field.setText(text);
 
-        title = findViewById(R.id.film_director);
-        text = "";
+        field = findViewById(R.id.film_director);
+        text = new StringBuffer();
         persons = film.getDirectors();
         for(Person item: persons){
-            text += item.getName();
+            text.append(item.getName());
             if(persons.indexOf(item) < persons.size() - 1){
-                text += ", ";
+                text.append(", ");
             }
         }
-        title.setText(text);
+        field.setText(text);
 
-        title = findViewById(R.id.film_country);
-        text = "";
+        field = findViewById(R.id.film_country);
+        text = new StringBuffer();
         List<Country> countries = film.getCountries();
         for(Country item: countries){
-            text += item.getName();
+            text.append(item.getName());
             if(countries.indexOf(item) < countries.size() - 1){
-                text += ", ";
+                text.append(", ");
             }
         }
-        title.setText(text);
+        field.setText(text);
 
-        title = findViewById(R.id.film_language);
-        text = "";
+        field = findViewById(R.id.film_language);
+        text = new StringBuffer();
         List<Language> languages = film.getLanguages();
         for(Language item: languages){
-            text += item.getName();
+            text.append(item.getName());
             if(languages.indexOf(item) < languages.size() - 1){
-                text += ", ";
+                text.append(", ");
             }
         }
-        title.setText(text);
+        field.setText(text);
 
-        title = findViewById(R.id.film_genre);
-        text = "";
+        field = findViewById(R.id.film_genre);
+        text = new StringBuffer();
         List<Genre> genres = film.getGenres();
         for(Genre item: genres){
-            text += item.getName();
+            text.append(item.getName());
             if(genres.indexOf(item) < genres.size() - 1){
-                text += ", ";
+                text.append(", ");
             }
         }
-        title.setText(text);
+        field.setText(text);
     }
 }

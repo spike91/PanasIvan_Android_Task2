@@ -1,16 +1,45 @@
 package com.example.user.panasivan_android_task2;
 
-import java.util.ArrayList;
-import java.util.List;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Objects;
 
-public class Country {
+public class Country implements Parcelable {
     private String name;
-    private List<Film> films = new ArrayList<>();
+    //private List<Film> films = new ArrayList<>();
 
     public Country(String name) {
         this.name = name;
     }
+
+    protected Country(Parcel in) {
+        name = in.readString();
+       // films = in.createTypedArrayList(Film.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+     //   dest.writeTypedList(films);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Country> CREATOR = new Creator<Country>() {
+        @Override
+        public Country createFromParcel(Parcel in) {
+            return new Country(in);
+        }
+
+        @Override
+        public Country[] newArray(int size) {
+            return new Country[size];
+        }
+    };
 
     public String getName() {
         return name;
@@ -20,13 +49,13 @@ public class Country {
         this.name = name;
     }
 
-    public List<Film> getFilms() {
-        return films;
-    }
+    //public List<Film> getFilms() {
+    //    return films;
+    //}
 
-    public void setFilms(List<Film> films) {
-        this.films = films;
-    }
+    //public void setFilms(List<Film> films) {
+    //    this.films = films;
+    //}
 
     @Override
     public boolean equals(Object o) {

@@ -1,9 +1,12 @@
 package com.example.user.panasivan_android_task2;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Film {
+public class Film implements Parcelable {
     private String title;
     private String year;
     private String runtime;
@@ -27,6 +30,32 @@ public class Film {
         this.plot = plot;
         this.awards = awards;
     }
+
+    protected Film(Parcel in) {
+        title = in.readString();
+        year = in.readString();
+        runtime = in.readString();
+        plot = in.readString();
+        awards = in.readString();
+        genres = in.createTypedArrayList(Genre.CREATOR);
+        countries = in.createTypedArrayList(Country.CREATOR);
+        languages = in.createTypedArrayList(Language.CREATOR);
+        directors = in.createTypedArrayList(Person.CREATOR);
+        actors = in.createTypedArrayList(Person.CREATOR);
+        writers = in.createTypedArrayList(Person.CREATOR);
+    }
+
+    public static final Creator<Film> CREATOR = new Creator<Film>() {
+        @Override
+        public Film createFromParcel(Parcel in) {
+            return new Film(in);
+        }
+
+        @Override
+        public Film[] newArray(int size) {
+            return new Film[size];
+        }
+    };
 
     public String getTitle() {
         return title;
@@ -153,4 +182,23 @@ public class Film {
         this.countries = countries;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeString(year);
+        dest.writeString(runtime);
+        dest.writeString(plot);
+        dest.writeString(awards);
+        dest.writeTypedList(genres);
+        dest.writeTypedList(countries);
+        dest.writeTypedList(languages);
+        dest.writeTypedList(directors);
+        dest.writeTypedList(actors);
+        dest.writeTypedList(writers);
+    }
 }
