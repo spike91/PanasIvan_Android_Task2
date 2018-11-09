@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">PanasIvan_Android_Task2</string>
     <string name="film_title_label">Title: </string>
+    <string name="film_year_label">Year: </string>
+    <string name="film_runtime_label">Runtime: </string>
+    <string name="film_awards_label">Awards: </string>
+    <string name="film_genre_label">Genre: </string>
+    <string name="film_country_label">Country: </string>
+    <string name="film_language_label">Language: </string>
+    <string name="film_plot_label">Plot: </string>
+    <string name="film_actor_label">Actors: </string>
+    <string name="film_writer_label">Writer: </string>
+    <string name="film_director_label">Director: </string>
 </resources>
