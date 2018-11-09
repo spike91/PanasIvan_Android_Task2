@@ -1,10 +1,8 @@
 package com.example.user.panasivan_android_task2;
 
 import android.content.Context;
-import android.util.Pair;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.InputStream;
@@ -54,11 +52,11 @@ public class JsonHelper {
                 String statesArray = obj.getString("Country");
                 initCountries(countryList, getCountryObjects(statesArray), film);
                 String actorsArray = obj.getString("Actors");
-                initPersons(personList, getPersonObjects(actorsArray), film, Role.ACTOR);
+                initPersons(personList, getPersonObjects(actorsArray), film, new Role("Actor"));
                 String writersArray = obj.getString("Writer");
-                initPersons(personList, getPersonObjects(writersArray), film, Role.WRITER);
+                initPersons(personList, getPersonObjects(writersArray), film, new Role("Writer"));
                 String directorsArray = obj.getString("Director");
-                initPersons(personList, getPersonObjects(directorsArray), film, Role.DIRECTOR);
+                initPersons(personList, getPersonObjects(directorsArray), film, new Role("Director"));
 
                 filmList.add(film);
             }
@@ -111,7 +109,7 @@ public class JsonHelper {
                 genreListOrigin.add(genre);
             }
             Genre genreInit = genreListOrigin.get(genreListOrigin.indexOf(genre));
-            genreInit.getFilms().add(film);
+            //genreInit.getFilms().add(film);
             film.addGenre(genre);
         }
     }
@@ -122,7 +120,7 @@ public class JsonHelper {
                 countryListOrigin.add(country);
             }
             Country countryInit = countryListOrigin.get(countryListOrigin.indexOf(country));
-            countryInit.getFilms().add(film);
+            //countryInit.getFilms().add(film);
             film.addCountry(country);
         }
     }
@@ -133,19 +131,21 @@ public class JsonHelper {
                 langListOrigin.add(lang);
             }
             Language langInit = langListOrigin.get(langListOrigin.indexOf(lang));
-            langInit.getFilms().add(film);
+            //langInit.getFilms().add(film);
             film.addLanguage(lang);
         }
     }
 
     public void initPersons(List<Person> personListOrigin, List<Person> personListToInit, Film film, Role role){
+
         for (Person person: personListToInit) {
-            if(role == Role.WRITER){
+            Role initRole = new Role(role.getName());
+            if(initRole.getName() == "Writer"){
                 Pattern pattern = Pattern.compile("\\((.*?)\\)");
                 Matcher m = pattern.matcher(person.getName());
                 while (m.find()) {
                     String s = m.group(0);
-                    role.setDescription(s);
+                    initRole.setDescription(s);
                     String name = person.getName().replace(s, "");
                     person.setName(name.trim());
                 }
@@ -153,20 +153,27 @@ public class JsonHelper {
             if(!personListOrigin.contains(person)){
                 personListOrigin.add(person);
             }
-            Person personInit = personListOrigin.get(personListOrigin.indexOf(person));
-            personInit.setRole(new Pair<>(film, role));
-            switch (role){
-                case ACTOR:
-                    film.setActor(personInit);
+            //Person personInit = personListOrigin.get(personListOrigin.indexOf(person));
+            //personInit.setRole(role);
+            //role.setPerson(personInit);
+            //role.setFilm(film);
+            person.setRole(initRole);
+            switch (initRole.getName()){
+                case "Actor":
+                    //film.setActor(personInit);
+                    film.setActor(person);
                     break;
-                case WRITER:
-                    film.setWriter(personInit);
+                case "Writer":
+                    //film.setWriter(personInit);
+                    film.setWriter(person);
                     break;
-                case DIRECTOR:
-                    film.setDirector(personInit);
+                case "Director":
+                    //film.setDirector(personInit);
+                    film.setDirector(person);
                     break;
                 default:
-                    film.setPerson(personInit);
+                    //film.setPerson(personInit);
+                    film.setPerson(person);
                     break;
             }
         }

@@ -1,16 +1,34 @@
 package com.example.user.panasivan_android_task2;
 
-import java.util.ArrayList;
-import java.util.List;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Objects;
 
-public class Genre {
+public class Genre implements Parcelable {
     private String name;
-    private List<Film> films = new ArrayList<>();
+   // private List<Film> films = new ArrayList<>();
 
     public Genre(String name) {
         this.name = name;
     }
+
+    protected Genre(Parcel in) {
+        name = in.readString();
+       // films = in.createTypedArrayList(Film.CREATOR);
+    }
+
+    public static final Creator<Genre> CREATOR = new Creator<Genre>() {
+        @Override
+        public Genre createFromParcel(Parcel in) {
+            return new Genre(in);
+        }
+
+        @Override
+        public Genre[] newArray(int size) {
+            return new Genre[size];
+        }
+    };
 
     public String getName() {
         return name;
@@ -20,13 +38,13 @@ public class Genre {
         this.name = name;
     }
 
-    public List<Film> getFilms() {
-        return films;
-    }
+    //public List<Film> getFilms() {
+    //    return films;
+   // }
 
-    public void setFilms(List<Film> films) {
-        this.films = films;
-    }
+   // public void setFilms(List<Film> films) {
+    //    this.films = films;
+    //}
 
     @Override
     public boolean equals(Object o) {
@@ -40,5 +58,16 @@ public class Genre {
     public int hashCode() {
 
         return Objects.hash(name);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+       // dest.writeTypedList((ArrayList<? extends Parcelable>) films);
     }
 }
