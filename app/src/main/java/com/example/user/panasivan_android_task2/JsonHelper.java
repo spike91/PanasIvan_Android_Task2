@@ -1,6 +1,7 @@
 package com.example.user.panasivan_android_task2;
 
 import android.content.Context;
+import android.database.Cursor;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -177,5 +178,16 @@ public class JsonHelper {
                     break;
             }
         }
+    }
+
+    public List<Film> searchDictionaryWords(String searchWord){
+        List<Film> mItems = new ArrayList<Film>();
+        List<Film> films = getFilms();
+        for(Film film: films){
+            if(film.getTitle().toUpperCase().contains(searchWord.toUpperCase())){
+                mItems.add(film);
+            }
+        }
+        return mItems;
     }
 }

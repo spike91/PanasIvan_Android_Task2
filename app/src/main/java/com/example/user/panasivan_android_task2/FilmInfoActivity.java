@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class FilmInfoActivity extends AppCompatActivity {
+public class FilmInfoActivity extends SearchableActivity {
     Film film;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 
 import java.util.List;
 
-public class FilmListActivity extends AppCompatActivity {
+public class FilmListActivity extends SearchableActivity {
     List<Film> films;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

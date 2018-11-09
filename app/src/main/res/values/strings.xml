@@ -11,4 +11,7 @@
     <string name="film_actor_label">Actors: </string>
     <string name="film_writer_label">Writer: </string>
     <string name="film_director_label">Director: </string>
+    <string name="app_label">Films app</string>
+    <string name="search_hint">Search Film</string>
+    <string name="search_view">Enter search</string>
 </resources>
