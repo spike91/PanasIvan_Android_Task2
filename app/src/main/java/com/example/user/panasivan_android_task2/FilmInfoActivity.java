@@ -2,19 +2,31 @@ package com.example.user.panasivan_android_task2;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
-
 import java.util.List;
 
 public class FilmInfoActivity extends SearchableActivity {
-    Film film;
+    private Film film;
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putParcelable("film", film);
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_film_info);
-        Intent intent = getIntent();
-        film = intent.getParcelableExtra("film");
+
+        if (savedInstanceState != null) {
+            film = savedInstanceState.getParcelable("film");
+
+        } else {
+            Intent intent = getIntent();
+            film = intent.getParcelableExtra("film");
+        }
+
         TextView field = findViewById(R.id.film_title);
         field.setText(film.getTitle());
         field = findViewById(R.id.film_year);

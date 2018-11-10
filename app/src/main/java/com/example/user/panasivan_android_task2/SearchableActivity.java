@@ -18,14 +18,13 @@ import java.util.List;
 public class SearchableActivity extends AppCompatActivity {
     private SearchAdapter mSearchAdapter;
     private ListView listView;
-    private JsonHelper databaseObject;
+    private JsonHelper dataStoreObject;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searchable);
-        // create database object
-        databaseObject = new JsonHelper(SearchableActivity.this);
-        listView = (ListView)findViewById(R.id.listView);
+        dataStoreObject = new JsonHelper(SearchableActivity.this);
+        listView = findViewById(R.id.listView);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -45,7 +44,7 @@ public class SearchableActivity extends AppCompatActivity {
         }
     }
     private void doMySearch(String query){
-        List<Film> dictionaryObject = databaseObject.searchDictionaryWords(query);
+        List<Film> dictionaryObject = dataStoreObject.searchDictionaryWords(query);
         mSearchAdapter = new SearchAdapter(SearchableActivity.this, dictionaryObject);
         listView.setAdapter(mSearchAdapter);
     }

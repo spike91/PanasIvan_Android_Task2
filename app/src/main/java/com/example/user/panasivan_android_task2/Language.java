@@ -7,7 +7,6 @@ import java.util.Objects;
 
 public class Language implements Parcelable {
     private String name;
-    //private List<Film> films = new ArrayList<>();
 
     public Language(String name) {
         this.name = name;
@@ -15,7 +14,6 @@ public class Language implements Parcelable {
 
     protected Language(Parcel in) {
         name = in.readString();
-    //    films = in.createTypedArrayList(Film.CREATOR);
     }
 
     public static final Creator<Language> CREATOR = new Creator<Language>() {
@@ -37,14 +35,6 @@ public class Language implements Parcelable {
     public void setName(String name) {
         this.name = name;
     }
-
-   // public List<Film> getFilms() {
-    //    return films;
-    //}
-
-    //public void setFilms(List<Film> films) {
-    //    this.films = films;
-    //}
 
     @Override
     public boolean equals(Object o) {
@@ -68,6 +58,5 @@ public class Language implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
-       // dest.writeTypedList(films);
     }
 }

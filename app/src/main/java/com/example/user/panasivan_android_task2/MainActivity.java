@@ -4,35 +4,49 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends SearchableActivity {
-    JsonHelper helper;
-    List<Film> films;
-    Context self;
+    private JsonHelper helper;
+    private List<Film> films;
+    private Context self;
     private List<Genre> genres = new ArrayList<>();
-    ListView genresList;
+    private ListView genresList;
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putParcelableArrayList("films", (ArrayList<? extends Parcelable>) films);
+        savedInstanceState.putParcelableArrayList("genres", (ArrayList<? extends Parcelable>) genres);
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         self = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         helper = new JsonHelper(this);
-        films = helper.getFilms();
 
-        for(Film film: films){
-            for(Genre genre: film.getGenres()){
-                if(!genres.contains(genre)){
-                    genres.add(genre);
+        if (savedInstanceState != null) {
+            films = savedInstanceState.getParcelableArrayList("films");
+            genres = savedInstanceState.getParcelableArrayList("genres");
+
+        } else {
+            films = helper.getFilms();
+
+            for(Film film: films){
+                for(Genre genre: film.getGenres()){
+                    if(!genres.contains(genre)){
+                        genres.add(genre);
+                    }
                 }
             }
         }
+
 
         genresList = findViewById(R.id.genresList);
         GenreAdapter genreAdapter = new GenreAdapter(this, R.layout.genre_item, genres);
