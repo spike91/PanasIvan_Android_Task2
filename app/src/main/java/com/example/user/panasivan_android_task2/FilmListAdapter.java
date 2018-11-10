@@ -24,7 +24,8 @@ public class FilmListAdapter extends RecyclerView.Adapter<FilmListAdapter.ViewHo
     public FilmListAdapter.ViewHolder onCreateViewHolder(final ViewGroup viewGroup, int i) {
         View view = inflater.inflate(R.layout.films_list_item, viewGroup, false);
         RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) view.getLayoutParams();
-        params.height = viewGroup.getMeasuredHeight() / 10;
+        //int viewHeight = films.size() * 25;
+        //params.height = viewHeight;
         view.setLayoutParams(params);
         return new FilmListAdapter.ViewHolder(view);
     }
